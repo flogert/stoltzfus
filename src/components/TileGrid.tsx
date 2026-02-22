@@ -23,28 +23,28 @@ interface GalleryItem {
 
 const galleryImages: GalleryItem[] = [
   {
-    src: "https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=600&q=80",
+    src: "https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=600&q=80&fm=webp",
     title: "Marble Retreat",
     category: "Bathroom",
     quote: "Stoltzfus transformed our master bath into a true spa retreat. Their craftsmanship is simply unmatched.",
     name: "SARAH M.",
   },
   {
-    src: "https://images.unsplash.com/photo-1695191388218-f6259600223f?w=600&q=80",
+    src: "https://images.unsplash.com/photo-1695191388218-f6259600223f?w=600&q=80&fm=webp",
     title: "Herringbone Hearth",
     category: "Kitchen",
     quote: "The herringbone layout in our kitchen is now everyone\u2019s favorite detail. Absolutely stunning work.",
     name: "PAUL K.",
   },
   {
-    src: "https://images.unsplash.com/photo-1614187952694-8483e3e55a9d?w=600&q=80",
+    src: "https://images.unsplash.com/photo-1614187952694-8483e3e55a9d?w=600&q=80&fm=webp",
     title: "Porcelain Living",
     category: "Living Area",
     quote: "From selection to installation, the entire Stoltzfus team made the process seamless and enjoyable.",
     name: "MILLA J.",
   },
   {
-    src: "https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=600&q=80",
+    src: "https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=600&q=80&fm=webp",
     title: "Grand Foyer Mosaic",
     category: "Entryway",
     quote: "Our foyer mosaic stops every guest in their tracks. Stoltzfus turned our vision into art.",

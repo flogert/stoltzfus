@@ -93,7 +93,7 @@ const approach = [
 
 const projects = [
   {
-    img: "https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=800&q=80&fm=webp",
     label: "Bathroom",
     title: "Marble Retreat Bath",
     location: "Lancaster, PA",
@@ -101,7 +101,7 @@ const projects = [
     year: "2025",
   },
   {
-    img: "https://images.unsplash.com/photo-1695191388218-f6259600223f?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1695191388218-f6259600223f?w=800&q=80&fm=webp",
     label: "Kitchen",
     title: "Herringbone Hearth",
     location: "Harrisburg, PA",
@@ -109,7 +109,7 @@ const projects = [
     year: "2024",
   },
   {
-    img: "https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=800&q=80&fm=webp",
     label: "Entryway",
     title: "Grand Foyer Mosaic",
     location: "Philadelphia, PA",
@@ -117,7 +117,7 @@ const projects = [
     year: "2024",
   },
   {
-    img: "https://images.unsplash.com/photo-1614187952694-8483e3e55a9d?w=800&q=80",
+    img: "https://images.unsplash.com/photo-1614187952694-8483e3e55a9d?w=800&q=80&fm=webp",
     label: "Living Area",
     title: "Porcelain Living Space",
     location: "Reading, PA",
@@ -261,6 +261,25 @@ function CraftValueRow({ title, body }: { title: string; body: string }) {
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [tileGridReady, setTileGridReady] = useState(false);
+  const projectsSectionRef = useRef<HTMLElement>(null);
+
+  // Only download TileGrid JS when projects section is near viewport
+  useEffect(() => {
+    const el = projectsSectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTileGridReady(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const [activeTesti, setActiveTesti] = useState(0);
   const [testiDir, setTestiDir] = useState(1);
   const testiTouchX = useRef<number | null>(null);
@@ -398,15 +417,13 @@ export default function App() {
           </motion.div>
           <div className="container" style={{ position: "relative", zIndex: 1 }}>
             <div className="hero-grid">
-              {/* Copy */}              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={stagger}
-                style={{ position: "relative", zIndex: 1 }}
-              >
+              {/* Copy — h1 starts opacity:1 so LCP is measured immediately */}
+              <div style={{ position: "relative", zIndex: 1 }}>
                 <motion.h1
                   id="hero-heading"
-                  variants={fadeUp}
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.7, ease: EASE }}
                   style={{ marginBottom: "1.5rem", position: "relative", zIndex: 1 }}
                 >
                   Transforming surfaces.
@@ -419,7 +436,9 @@ export default function App() {
                 </motion.h1>
 
                 <motion.p
-                  variants={fadeUp}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
                   style={{ marginBottom: "2rem", maxWidth: "24rem", fontSize: "0.9375rem", lineHeight: 1.7, color: "var(--muted)", position: "relative", zIndex: 1 }}
                 >
                   Pennsylvania's trusted tile specialists — bathrooms, kitchens,
@@ -427,13 +446,15 @@ export default function App() {
                 </motion.p>
 
                 <motion.div
-                  variants={fadeUp}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.75, ease: EASE, delay: 0.2 }}
                   style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", position: "relative", zIndex: 1 }}
                 >
                   <a href="#contact" className="btn btn-primary">Book a Call</a>
                   <a href="#projects" className="btn btn-glass">See Projects</a>
                 </motion.div>
-              </motion.div>
+              </div>
 
               {/* Hex honeycomb images */}
               <motion.div
@@ -444,12 +465,12 @@ export default function App() {
                 aria-hidden="true"
               >
                 {[
-                  "https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=600&q=85",
-                  "https://images.unsplash.com/photo-1614187952694-8483e3e55a9d?w=600&q=85",
-                  "https://images.unsplash.com/photo-1695191388218-f6259600223f?w=600&q=85",
-                  "https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=600&q=85",
-                  "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=85",
-                  "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=85",
+                  "https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=600&q=85&fm=webp",
+                  "https://images.unsplash.com/photo-1614187952694-8483e3e55a9d?w=600&q=85&fm=webp",
+                  "https://images.unsplash.com/photo-1695191388218-f6259600223f?w=600&q=85&fm=webp",
+                  "https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=600&q=85&fm=webp",
+                  "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=85&fm=webp",
+                  "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=85&fm=webp",
                 ].map((src, i) => (
                   <div key={i} className="hero-hex-cell">
                     <div className="hero-hex-fill">
@@ -545,10 +566,12 @@ export default function App() {
         </section>
 
         {/* ── GALLERY + PROJECTS (merged "Our Finest Work") ── */}
-        <section id="projects" className="section hex-section" style={{ background: "var(--bg-alt)" }} aria-labelledby="gallery-heading">
-          <Suspense fallback={<div style={{ minHeight: "32rem" }} />}>
-            <TileGrid />
-          </Suspense>
+        <section id="projects" ref={projectsSectionRef} className="section hex-section" style={{ background: "var(--bg-alt)" }} aria-labelledby="gallery-heading">
+          {tileGridReady && (
+            <Suspense fallback={<div style={{ minHeight: "32rem" }} />}>
+              <TileGrid />
+            </Suspense>
+          )}
 
           {/* Approach steps */}
           <div className="container" style={{ marginTop: "4rem" }}>
@@ -794,7 +817,7 @@ export default function App() {
               className="hide-mobile cta-image"
             >
               <img
-                src="https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=800&q=80"
+                src="https://images.unsplash.com/photo-1693773511442-8f2787a2c89e?w=800&q=80&fm=webp"
                 alt="Elegant tile interior showcase"
                 loading="lazy"
               />
