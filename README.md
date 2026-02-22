@@ -2,6 +2,7 @@
 
 Marketing landing page for Stoltzfus Tile & Design — a tile installation company based in Lancaster, PA.
 
+**Live site:** https://YOUR_GITHUB_USERNAME.github.io/stoltzfus/  
 Original Figma design: https://www.figma.com/design/lmF97rcVk19O48JXHYQQUE/Tile-Animation-Recreation
 
 ## Tech stack
