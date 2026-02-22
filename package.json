@@ -1,0 +1,23 @@
+{
+      "name": "stoltzfus-tile",
+      "version": "1.0.0",
+      "private": true,
+      "dependencies": {
+            "@radix-ui/react-accordion": "^1.2.3",
+            "lucide-react": "^0.487.0",
+            "motion": "*",
+            "react": "^18.3.1",
+            "react-dom": "^18.3.1"
+      },
+      "devDependencies": {
+            "@types/node": "^20.10.0",
+            "@types/react": "^19.2.2",
+            "@types/react-dom": "^19.2.2",
+            "@vitejs/plugin-react-swc": "^3.10.2",
+            "vite": "6.3.5"
+      },
+      "scripts": {
+            "dev": "vite",
+            "build": "vite build"
+      }
+}
