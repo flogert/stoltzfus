@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { TileGrid } from "./components/TileGrid";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+const TileGrid = lazy(() => import("./components/TileGrid").then(m => ({ default: m.TileGrid })));
 import { HexGrid } from "./components/HexGrid";
 import { Logo } from "./components/Logo";
 import { GalaxyButton } from "./components/GalaxyButton";
@@ -453,7 +453,14 @@ export default function App() {
                 ].map((src, i) => (
                   <div key={i} className="hero-hex-cell">
                     <div className="hero-hex-fill">
-                      <img src={src} alt="" loading={i < 2 ? "eager" : "lazy"} />
+                      <img
+                        src={src}
+                        alt=""
+                        width={600}
+                        height={400}
+                        loading={i < 2 ? "eager" : "lazy"}
+                        fetchPriority={i === 0 ? "high" : undefined}
+                      />
                     </div>
                   </div>
                 ))}
@@ -539,7 +546,9 @@ export default function App() {
 
         {/* ── GALLERY + PROJECTS (merged "Our Finest Work") ── */}
         <section id="projects" className="section hex-section" style={{ background: "var(--bg-alt)" }} aria-labelledby="gallery-heading">
-          <TileGrid />
+          <Suspense fallback={<div style={{ minHeight: "32rem" }} />}>
+            <TileGrid />
+          </Suspense>
 
           {/* Approach steps */}
           <div className="container" style={{ marginTop: "4rem" }}>

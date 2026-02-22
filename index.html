@@ -27,6 +27,17 @@
     <!-- Theme color -->
     <meta name="theme-color" content="#F5F1EB" />
 
+    <!-- Fonts: preconnect then non-blocking load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" /></noscript>
+
+    <!-- Preconnect to image CDN for faster LCP -->
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <!-- Preload first hex image (LCP candidate) -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1699543909013-4b9c73081b48?w=600&q=85" fetchpriority="high" />
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {

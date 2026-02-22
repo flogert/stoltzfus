@@ -57,6 +57,8 @@ export function HexGrid({
     let mouse = { x: -99999, y: -99999 };
     let raf = 0;
     let W = 0, H = 0;
+    let visible = false;
+    let dirty = true; // redraw needed
 
     const S = size;
     const dx = S * Math.sqrt(3);
@@ -86,6 +88,7 @@ export function HexGrid({
       el.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildGrid(W, H);
+      dirty = true;
     }
 
     const ro = new ResizeObserver(resize);
@@ -96,39 +99,58 @@ export function HexGrid({
     const gg = dark ? DG : AG;
     const bb = dark ? DB : AB;
 
-    function draw() {
-      raf = requestAnimationFrame(draw);
+    function drawFrame() {
+      if (!dirty) return;
+      dirty = false;
       ctx.clearRect(0, 0, W, H);
-
       cells.forEach((c) => {
-        /* Mouse proximity hover glow only — no idle animation */
         const dist = Math.hypot(c.cx - mouse.x, c.cy - mouse.y);
         const hover = dist < hoverRadius
           ? Math.pow(1 - dist / hoverRadius, 1.8) * 0.85
           : 0;
-
         const alpha = baseAlpha + hover * (peakAlpha - baseAlpha);
-
         drawHex(ctx, c.cx, c.cy, S - 1);
         ctx.strokeStyle = `rgba(${rr},${gg},${bb},${alpha})`;
         ctx.lineWidth = 0.75 + hover * 1.25;
         ctx.stroke();
       });
     }
-    draw();
 
-    /* Track mouse across the full window so hover works even with pointer-events:none */
+    function loop() {
+      drawFrame();
+      raf = requestAnimationFrame(loop);
+    }
+
+    /* Only run the loop while the canvas is in the viewport */
+    const io = new IntersectionObserver(
+      (entries) => {
+        visible = entries[0].isIntersecting;
+        if (visible && !raf) {
+          dirty = true;
+          loop();
+        } else if (!visible) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
+    /* Mark dirty on mouse move so we only redraw when something changed */
     const onMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouse = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      dirty = true;
     };
-    const onLeave = () => { mouse = { x: -99999, y: -99999 }; };
+    const onLeave = () => { mouse = { x: -99999, y: -99999 }; dirty = true; };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseleave", onLeave);
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
     };
