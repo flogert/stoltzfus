@@ -7,14 +7,9 @@ export function Logo({ size = 36, color = "#8B7355" }: { size?: number; color?: 
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Outer diamond / tile shape */}
-      <rect
-        x="24"
-        y="2"
-        width="30"
-        height="30"
-        rx="3"
-        transform="rotate(45 24 2)"
+      {/* Outer hexagon shape */}
+      <polygon
+        points="24,2 43,13 43,35 24,46 5,35 5,13"
         fill={color}
       />
       {/* Inner tile grid lines */}

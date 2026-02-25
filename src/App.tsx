@@ -3,12 +3,6 @@ const TileGrid = lazy(() => import("./components/TileGrid").then(m => ({ default
 import { HexGrid } from "./components/HexGrid";
 import { Logo } from "./components/Logo";
 import { GalaxyButton } from "./components/GalaxyButton";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./components/ui/accordion";
 import { Phone, Mail, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -524,20 +518,11 @@ export default function App() {
                 viewport={{ once: true, margin: "-80px" }}
                 variants={stagger}
               >
-                <motion.p variants={fadeUp} className="label" style={{ marginBottom: "1.25rem" }}>What We Do</motion.p>
-                <div className="services-accordion">
-                  <Accordion type="single" collapsible>
-                    {services.map((svc, i) => (
-                      <motion.div key={svc.title} variants={fadeUp}>
-                        <AccordionItem value={`svc-${i}`}>
-                          <AccordionTrigger>{svc.title}</AccordionTrigger>
-                          <AccordionContent>
-                            <p style={{ maxWidth: "38rem" }}>{svc.body}</p>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </motion.div>
-                    ))}
-                  </Accordion>
+                <motion.p variants={fadeUp} className="label" style={{ marginBottom: 0 }}>What We Do</motion.p>
+                <div className="craft-values">
+                  {services.map((svc) => (
+                    <CraftValueRow key={svc.title} title={svc.title} body={svc.body} />
+                  ))}
                 </div>
               </motion.div>
             </div>
